@@ -10,6 +10,7 @@ const Sidebar = () => {
                 width={100}
                 height={100}
                 className="mb-12 cursor-pointer"
+                alt="Nyan logo"
             />
             <Menu />
         </aside>

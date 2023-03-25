@@ -96,6 +96,7 @@ const Summary = () => {
                                 if (index <= 2)
                                     return (
                                         <div
+                                            key={`member_${index}`}
                                             className={`${
                                                 index > 0 && '-ml-2'
                                             } w-12 h-12 rounded-full border border-gray-700`}

@@ -1,24 +1,37 @@
+import { useSelector, useDispatch } from 'react-redux'
 import {
     ClockIcon,
     ChatBubbleBottomCenterTextIcon,
     PaperClipIcon,
 } from '@heroicons/react/24/outline'
 import Link from 'next/link'
+import { selectTask } from '@/redux/slices/tasksSlice'
 
 const TaskCard = ({
+    id,
     startFrom,
     title,
     refLink,
     comments,
-    completion,
+    phases,
     progressColor,
+    onSelect,
 }) => {
+    const completion =
+        (phases.filter((phase) => phase.isComplete).length / phases.length) *
+        100
+
     const progressStyle = {
-        width: `${(completion / 100) * 100}%`,
+        width: `${completion}%`,
     }
 
     return (
-        <div className="py-3 px-5 grid grid-cols-6 items-center content-evenly gap-2 bg-white rounded-xl hover:-translate-y-1 transition duration-150 cursor-pointer">
+        <div
+            className="py-3 px-5 grid grid-cols-6 items-center content-evenly gap-2 bg-white rounded-xl hover:-translate-y-1 transition duration-150 cursor-pointer"
+            onClick={() => {
+                onSelect(id)
+            }}
+        >
             <div className="">
                 <h3 className="text-sm font-semibold text-left">Start from</h3>
                 <div className="flex items-center justify-start text-gray-500 gap-2 mt-1">
@@ -54,7 +67,7 @@ const TaskCard = ({
                 <div className="relative h-1 rounded-full overflow-hidden mt-2 bg-gray-300">
                     <div
                         style={progressStyle}
-                        className={`absolute top-0 left-0 h-full ${progressColor}`}
+                        className={`absolute top-0 left-0 h-full ${progressColor} `}
                     ></div>
                 </div>
             </div>
@@ -66,13 +79,24 @@ const TaskCard = ({
 }
 
 const Tasks = () => {
+    const { tasks } = useSelector((state) => state.tasks)
+    const dispatch = useDispatch()
+
+    function handleTaskSelect(taskId) {
+        return dispatch(selectTask({ taskId }))
+    }
+
     return (
         <section className="p-7 pt-12 bg-gray-200">
             <h2 className="text-gray-800 font-semibold text-xl">Tasks</h2>
             <div className="mt-3 space-y-3">
-                {TASKS?.length &&
-                    TASKS.map((task) => (
-                        <TaskCard key={task.title} {...task} />
+                {tasks?.length &&
+                    tasks.map((task) => (
+                        <TaskCard
+                            key={task.title}
+                            {...task}
+                            onSelect={handleTaskSelect}
+                        />
                     ))}
                 <button className="w-16 h-16 grid place-items-center bg-blue-500 text-4xl text-white font-thin rounded-full mx-auto hover:bg-blue-400 active:bg-blue-600 transition duration-200">
                     +
