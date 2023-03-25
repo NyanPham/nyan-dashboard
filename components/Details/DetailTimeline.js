@@ -3,6 +3,8 @@ import Calendar from 'react-calendar'
 // import 'react-calendar/dist/Calendar.css'
 
 const displayOccupiedDates = (dateButtons, activePhases) => {
+    dateButtons.forEach((button) => button.classList.remove('occupied'))
+
     dateButtons
         .filter((button) => {
             const date = new Date(
@@ -38,11 +40,11 @@ const DetailTimeline = ({ task }) => {
         ]
 
         displayOccupiedDates(allDateButtons, phasesWithDates)
-    }, [clickCount])
+    }, [clickCount, task])
 
     return (
         <div
-            className="px-4 py-5"
+            className="px-7 py-5"
             ref={calendarRef}
             onClick={() => setClickCount((prevCount) => prevCount + 1)}
         >

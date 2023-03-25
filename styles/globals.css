@@ -3,6 +3,21 @@
 @tailwind utilities;
 
 @layer components {
+    .form-group {
+        @apply flex flex-col gap-2 items-start justify-center w-full;
+    }
+    
+    .form-heading {
+        @apply text-center text-2xl font-semibold;
+    }
+
+    .form-input {
+        @apply text-base outline-none active:outline-none rounded-xl bg-gray-100 text-gray-900 py-2 px-5 w-full;
+    }
+    
+    .form-title {
+        @apply text-gray-700 text-base;
+    }
 }
 
 .react-calendar__navigation {
@@ -31,7 +46,10 @@
     border: 0;
     border-radius: 3px;
     color: white;
-    padding: 5px 0;
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
 }
 
 .react-calendar button:hover {
@@ -49,6 +67,7 @@
 
 .react-calendar__month-view__days .react-calendar__tile {
     max-width: initial !important;
+    font-size: 0.85rem;
 }
 
 .react-calendar__month-view__days .react-calendar__tile.occupied {
@@ -95,6 +114,7 @@
 
 .react-calendar abbr:where([title]) {
     text-decoration: none;
+    font-size: 0.8rem;
 }
 
 .react-calendar .react-calendar__navigation__arrow.react-calendar__navigation__prev2-button,

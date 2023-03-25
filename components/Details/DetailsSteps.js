@@ -11,9 +11,10 @@ const DetailsSteps = ({ task }) => {
     const { phases } = task
 
     return (
-        <div className="px-4 ">
+        <div className="px-7">
             {phases.map((phase, index) => (
                 <DetailsStep
+                    taskId={task.id}
                     phase={phase}
                     key={phase.time}
                     isLast={index === phases.length - 1}

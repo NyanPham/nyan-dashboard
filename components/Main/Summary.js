@@ -37,12 +37,12 @@ const MEMBERS = [1, 2, 3, 4, 5, 6, 7, 8]
 const EstimateCard = ({ bgColor, textColor, text, number, icon: ICon }) => {
     return (
         <div
-            className={`${bgColor} ${textColor} w-1/3 flex flex-col items-center justify-center gap-2 p-5 shadow rounded-2xl`}
+            className={`${bgColor} ${textColor} max-w-full sm:max-w-[250px] w-full lg:w-1/3 flex flex-col items-center justify-center gap-2 p-5 shadow rounded-2xl`}
         >
             <div className="w-12 h-12 p-3 rounded-full border border-gray-500">
                 <ICon className="w-full h-ful" />
             </div>
-            <h4 className="capitalize font-medium text-md">{text}</h4>
+            <h4 className="capitalize font-medium text-base">{text}</h4>
             <h3 className="font-semibold text-2xl">{number}</h3>
         </div>
     )
@@ -50,17 +50,17 @@ const EstimateCard = ({ bgColor, textColor, text, number, icon: ICon }) => {
 
 const Summary = () => {
     return (
-        <section className="p-7 bg-gray-200">
+        <section className="p-3 lg:p-7 bg-gray-200">
             <h2 className="text-gray-800 font-semibold text-xl">
                 Task summary
             </h2>
-            <div className="flex mt-3 rounded-xl bg-white shadow-lg px-8 py-7 gap-8">
-                <div className="w-2/3 pr-8 border-r border-gray-900/20">
-                    <h3 className="text-gray-800 font-semibold text-md flex items-center gap-2">
+            <div className="flex flex-col lg:flex-row mt-3 rounded-xl bg-white shadow-lg p-4 gap-4 lg:px-8 lg:py-7 lg:gap-8">
+                <div className="w-full lg:pr-8 lg:w-2/3 lg:border-r lg:border-gray-900/20">
+                    <h3 className="text-gray-800 font-semibold text-base flex items-center gap-2">
                         <ClipboardDocumentIcon className="w-7 h-7" />
                         Project estimate
                     </h3>
-                    <div className="flex gap-4 mt-5">
+                    <div className="flex gap-4 mt-5 flex-wrap lg:flex-nowrap">
                         {ESTIMATE_ITEMS.length &&
                             ESTIMATE_ITEMS.map((item) => (
                                 <EstimateCard {...item} key={item.text} />
@@ -84,8 +84,8 @@ const Summary = () => {
                         </div>
                     </div>
                 </div>
-                <div className="w-1/3">
-                    <h3 className="text-gray-800 font-semibold text-md flex items-center gap-2">
+                <div className="w-full lg:w-1/3">
+                    <h3 className="text-gray-800 font-semibold text-base flex items-center gap-2">
                         <UsersIcon className="w-7 h-7" />
                         Our team
                     </h3>

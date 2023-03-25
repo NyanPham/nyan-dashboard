@@ -9,7 +9,7 @@ import MenuItem from './MenuItem'
 
 const Menu = () => {
     return (
-        <div className="p-5 space-y-4 w-max">
+        <div className="space-y-4 w-max">
             <MenuItem Icon={ChartBarSquareIcon} itemName="tasks" />
             <MenuItem Icon={PresentationChartLineIcon} itemName="progress" />
             <MenuItem Icon={ChatBubbleLeftEllipsisIcon} itemName="messages" />

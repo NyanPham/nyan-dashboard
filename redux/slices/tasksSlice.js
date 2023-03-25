@@ -13,6 +13,7 @@ const initialState = {
                     icon: 'camera',
                     isComplete: true,
                     image: '',
+                    id: 'phase-1',
                 },
                 {
                     title: 'Deal with new client',
@@ -21,6 +22,7 @@ const initialState = {
                     icon: 'camera',
                     isComplete: false,
                     image: '',
+                    id: 'phase-2',
                 },
             ],
             startFrom: '2023-03-25',
@@ -42,6 +44,7 @@ const initialState = {
                     icon: 'camera',
                     isComplete: false,
                     image: '',
+                    id: 'phase-3',
                 },
                 {
                     title: 'Deal with new client',
@@ -50,6 +53,7 @@ const initialState = {
                     icon: 'camera',
                     isComplete: false,
                     image: '',
+                    id: 'phase-4',
                 },
             ],
             startFrom: '2015-03-27',
@@ -68,7 +72,33 @@ export const tasksSlice = createSlice({
     name: 'tasks',
     initialState,
     reducers: {
-        addTask: (state, action) => {},
+        addTask: (state, { payload }) => {
+            const newTask = {
+                id: new Date().toString(),
+                title: payload.title,
+                startFrom: new Date(),
+                description: payload.description || '',
+                refLink: payload.refLink || '',
+                comments: payload.comments || [],
+                progressColor: payload.progressColor || 'bg-sky-500',
+                image: payload.image || '',
+                phases:
+                    payload.phases?.map((phase, index) => ({
+                        ...phase,
+                        id: `${new Date().toString()}_${index}`,
+                    })) || [],
+            }
+
+            state.tasks.push(newTask)
+        },
+        toggleTaskPhase: (state, { payload }) => {
+            const { taskId, phaseId } = payload
+            const phase = state.tasks
+                .find((task) => task.id === taskId)
+                .phases.find((phase) => phase.id === phaseId)
+
+            phase.isComplete = !phase.isComplete
+        },
         selectTask: (state, { payload }) => {
             if (state.activeTaskId !== payload.taskId) {
                 state.activeTaskId = payload.taskId
@@ -77,7 +107,6 @@ export const tasksSlice = createSlice({
     },
 })
 
-// Action creators are generated for each case reducer function
-export const { addTask, selectTask } = tasksSlice.actions
+export const { addTask, selectTask, toggleTaskPhase } = tasksSlice.actions
 
 export default tasksSlice.reducer

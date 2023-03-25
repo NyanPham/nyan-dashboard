@@ -7,7 +7,7 @@ const FilterItem = ({ tag, handleClick, isSelected }) => {
     return (
         <span
             onClick={handleClick}
-            className={`py-2 text-center w-full block ${
+            className={`py-2 px-4 text-center w-full block ${
                 isSelected ? 'bg-sky-300' : 'hover:bg-gray-200 '
             }`}
         >
@@ -28,10 +28,10 @@ const Filters = () => {
             }}
         >
             <FunnelIcon className="w-5 h-5 shrink-0" />
-            Filters
+            <span className="hidden lg:inline-block">Filters</span>
             <ChevronDownIcon className="text-sky-600 w-3 h-3 group-hover:translate-y-0.5 transition duration-200" />
             <div
-                className={`absolute top-full left-0 w-full h-max bg-white shadow transition duration-200 ${
+                className={`absolute top-full right-0 w-max h-max bg-white shadow transition duration-200 ${
                     open
                         ? 'translate-y-1 opacity-100 pointer-events-auto'
                         : '-translate-y-2 opacity-0 pointer-events-none'
