@@ -4,7 +4,7 @@ import nyanLogo from '../../public/nyan-logo.png'
 
 const Sidebar = () => {
     return (
-        <aside className="p-5 bg-gray-200 flex flex-col justify-start items-center">
+        <aside className="p-5 bg-gray-100 flex flex-col justify-start items-center">
             <Image
                 src={nyanLogo}
                 width={100}
