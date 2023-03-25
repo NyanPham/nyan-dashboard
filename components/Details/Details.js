@@ -6,7 +6,7 @@ import DetailTimeline from './DetailTimeline'
 
 const Details = () => {
     return (
-        <div className="w-2/5">
+        <div className="w-2/5 sticky h-screen top-0 right-0">
             <DetailsHeader />
             <DetailsSummary />
             <DetailTimeline />

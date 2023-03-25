@@ -5,14 +5,14 @@ const FILTER_TAGS = ['completed', 'pending', 'overdue']
 
 const FilterItem = ({ tag, handleClick, isSelected }) => {
     return (
-        <button
+        <span
             onClick={handleClick}
-            className={`py-2 text-center w-full ${
+            className={`py-2 text-center w-full block ${
                 isSelected ? 'bg-sky-300' : 'hover:bg-gray-200 '
             }`}
         >
             {tag}
-        </button>
+        </span>
     )
 }
 
