@@ -2,7 +2,7 @@ import Filters from './Filters'
 
 const Heading = ({ title, description }) => {
     return (
-        <div className="p-7 flex justify-between items-center">
+        <div className="p-7 pt-0 flex justify-between items-center">
             <div className="">
                 <h3 className="text-gray-800 text-3xl font-semibold">
                     {title}

@@ -5,25 +5,6 @@ import {
 } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 
-const TASKS = [
-    {
-        startFrom: '2015-03-26',
-        title: 'Search Inspiration for projects',
-        refLink: 'https://linkedin.com',
-        comments: ['great', 'perfect', 'good'],
-        completion: 30,
-        progressColor: 'bg-sky-500',
-    },
-    {
-        startFrom: '2015-03-27',
-        title: 'Website Redesign',
-        refLink: 'https://linkedin.com',
-        comments: ['great', 'perfect', 'good'],
-        completion: 82,
-        progressColor: 'bg-emerald-500',
-    },
-]
-
 const TaskCard = ({
     startFrom,
     title,
@@ -37,10 +18,10 @@ const TaskCard = ({
     }
 
     return (
-        <div className="py-3 px-5 grid grid-cols-6 items-center gap-2 bg-white rounded-xl hover:-translate-y-1 transition duration-150 cursor-pointer">
+        <div className="py-3 px-5 grid grid-cols-6 items-center content-evenly gap-2 bg-white rounded-xl hover:-translate-y-1 transition duration-150 cursor-pointer">
             <div className="">
                 <h3 className="text-sm font-semibold text-left">Start from</h3>
-                <div className="flex items-center justify-start text-gray-500 gap-2">
+                <div className="flex items-center justify-start text-gray-500 gap-2 mt-1">
                     <ClockIcon className="w-5 h-5" />
                     {new Date(startFrom).toLocaleDateString('en-US', {
                         month: 'short',
@@ -68,16 +49,16 @@ const TaskCard = ({
                     </div>
                 </div>
             </div>
-            <div className="">
+            <div className="mr-3">
                 <div className="text-sm">{completion}% complete</div>
-                <div className="relative h-1 rounded-full overflow-hidden mt-2">
+                <div className="relative h-1 rounded-full overflow-hidden mt-2 bg-gray-300">
                     <div
                         style={progressStyle}
                         className={`absolute top-0 left-0 h-full ${progressColor}`}
                     ></div>
                 </div>
             </div>
-            <button className="p-2 bg-blue-700/50 text-white font-medium rounded-full text-sm text-center hover:bg-blue-700/90">
+            <button className="ml-2 p-2 bg-blue-700/50 text-white font-medium rounded-full text-sm text-center hover:bg-blue-700/90">
                 Reminder
             </button>
         </div>
@@ -93,6 +74,9 @@ const Tasks = () => {
                     TASKS.map((task) => (
                         <TaskCard key={task.title} {...task} />
                     ))}
+                <button className="w-16 h-16 grid place-items-center bg-blue-500 text-4xl text-white font-thin rounded-full mx-auto hover:bg-blue-400 active:bg-blue-600 transition duration-200">
+                    +
+                </button>
             </div>
         </section>
     )

@@ -20,7 +20,7 @@ const ESTIMATE_ITEMS = [
         icon: SquaresPlusIcon,
         text: 'assigned',
         number: 72,
-        bgColor: 'bg-sky-600',
+        bgColor: 'bg-sky-500',
         textColor: 'text-white',
     },
     {
