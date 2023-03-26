@@ -7,7 +7,7 @@ import {
     TrashIcon,
 } from '@heroicons/react/24/outline'
 import { useDispatch } from 'react-redux'
-import { createTask } from '@/redux/slices/tasksSlice'
+import { addTask, createTask } from '@/redux/slices/tasksSlice'
 
 const inititalTask = {
     phases: [],
@@ -41,8 +41,6 @@ const AddTask = () => {
     // new task and phase data
     const [taskData, setTaskData] = useState(inititalTask)
     const [phasesData, setPhasesData] = useState(inititalPhases)
-
-    console.log(taskData.progressColor)
 
     useEffect(() => {
         containerRef.current = document.getElementById('portal')
@@ -141,7 +139,9 @@ const AddTask = () => {
         setPhasesData(inititalPhases)
         setOpen(false)
 
-        dispatch(createTask(newTask))
+        const createdTask = dispatch(createTask(newTask))
+        console.log(typeof createdTask)
+        console.log(createTask)
     }
 
     return (

@@ -4,9 +4,10 @@ import Image from 'next/image'
 import { useDispatch } from 'react-redux'
 import { ICON_MAP } from './DetailsSteps'
 import { illustrations } from '@/public/illustrations'
+import { useEffect } from 'react'
 
 const DetailsStep = ({ taskId, phase, isLast }) => {
-    const { title, time, location, icon, isComplete, image } = phase
+    const { title, time, location, icon, isComplete, image, _id } = phase
     const Icon = ICON_MAP[icon]
     const TimeIcon = isComplete ? CheckCircleIcon : ClockIcon
     const dispatch = useDispatch()
@@ -14,6 +15,27 @@ const DetailsStep = ({ taskId, phase, isLast }) => {
     function handleToggleTask() {
         return dispatch(toggleTaskPhase({ taskId, phaseId: phase._id }))
     }
+
+    useEffect(() => {
+        const togglePhase = async () => {
+            try {
+                await fetch(
+                    `http://localhost:3000/api/tasks/${taskId}/phases/${_id}`,
+                    {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-type': 'application/json',
+                        },
+                        body: JSON.stringify({ isComplete }),
+                    }
+                )
+            } catch (error) {
+                console.error(error)
+            }
+        }
+
+        togglePhase()
+    }, [isComplete])
 
     const imgSrc =
         image && image !== ''

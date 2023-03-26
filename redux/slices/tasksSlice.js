@@ -83,7 +83,7 @@ export const createTask = createAsyncThunk('tasks/createTask', async (task) => {
 
         const data = await res.json()
 
-        return data
+        return data.data.task
     } catch (error) {
         console.error(error)
     }
@@ -95,7 +95,7 @@ export const tasksSlice = createSlice({
     reducers: {
         addTask: (state, { payload }) => {
             const newTask = {
-                id: new Date().toString(),
+                _id: payload._id || new Date().toString(),
                 title: payload.title,
                 startFrom: new Date(),
                 description: payload.description || '',
@@ -106,7 +106,7 @@ export const tasksSlice = createSlice({
                 phases:
                     payload.phases?.map((phase, index) => ({
                         ...phase,
-                        id: `${new Date().toString()}_${index}`,
+                        _id: phase._id || `${new Date().toString()}_${index}`,
                     })) || [],
             }
 
@@ -126,34 +126,24 @@ export const tasksSlice = createSlice({
             }
         },
         setTasks: (state, { payload }) => {
-            console.log(payload)
             state.tasks = payload.tasks
+        },
+        updateTask: (state, { payload }) => {
+            const updatedTask = state.tasks.find(
+                (task) => task._id === payload._id
+            )
+
+            updatedTask.title = payload.title
+            updatedTask.description = payload.description
         },
     },
     extraReducers: (builder) => {
         builder.addCase(createTask.pending, (state) => {
             state.isLoading = true
         })
-        builder.addCase(createTask.fulfilled, (state, { meta }) => {
-            const { arg } = meta
-
-            // const newTask = {
-            //     id: new Date().toString(),
-            //     title: payload.title,
-            //     startFrom: new Date(),
-            //     description: payload.description || '',
-            //     refLink: payload.refLink || '',
-            //     comments: payload.comments || [],
-            //     progressColor: payload.progressColor || 'bg-sky-500',
-            //     image: payload.image || '',
-            //     phases:
-            //         payload.phases?.map((phase, index) => ({
-            //             ...phase,
-            //             id: `${new Date().toString()}_${index}`,
-            //         })) || [],
-            // }
-
-            // state.tasks.push(newTask)
+        builder.addCase(createTask.fulfilled, (state, payload) => {
+            console.log(payload.payload)
+            state.tasks.push(payload.payload)
             state.isLoading = false
         })
         builder.addCase(createTask.rejected, (state) => {
@@ -162,7 +152,7 @@ export const tasksSlice = createSlice({
     },
 })
 
-export const { addTask, selectTask, toggleTaskPhase, setTasks } =
+export const { addTask, selectTask, toggleTaskPhase, setTasks, updateTask } =
     tasksSlice.actions
 
 export default tasksSlice.reducer

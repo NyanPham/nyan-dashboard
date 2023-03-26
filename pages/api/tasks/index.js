@@ -27,8 +27,7 @@ const handler = async (req, res) => {
                         })
                     })
                 )
-
-                const task = await Task.create({
+                const task = new Task({
                     title,
                     description,
                     refLink,
@@ -38,15 +37,17 @@ const handler = async (req, res) => {
                     phases: createdPhases.map((phase) => phase._id),
                 })
 
+                const createdTask = await task
+                    .save()
+                    .then((task) => task.populate('phases'))
+
                 return res.status(201).json({
                     status: 'success',
                     data: {
-                        task,
+                        task: createdTask,
                     },
                 })
             } catch (error) {
-                console.log(error)
-
                 return res.status(500).json({
                     status: 'error',
                     error: error.messgae,
