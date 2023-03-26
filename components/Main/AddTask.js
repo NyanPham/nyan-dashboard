@@ -11,8 +11,8 @@ import { addTask, createTask } from '@/redux/slices/tasksSlice'
 
 const inititalTask = {
     phases: [],
-    title: '',
-    description: '',
+    title: 'Title',
+    description: 'Des',
     refLink: '',
     comments: [],
     progressColor: '#0EA5E9',
@@ -22,9 +22,9 @@ const inititalTask = {
 const inititalPhases = [
     {
         index: 0,
-        title: '',
-        location: '',
-        time: new Date(),
+        title: 'Phase',
+        location: 'Here',
+        time: Date.now(),
         icon: 'camera',
         image: '',
     },

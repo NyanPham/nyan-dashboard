@@ -1,12 +1,15 @@
-import { toggleTaskPhase } from '@/redux/slices/tasksSlice'
+import { deletePhase, toggleTaskPhase } from '@/redux/slices/tasksSlice'
 import { ClockIcon, CheckCircleIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 import { useDispatch } from 'react-redux'
 import { ICON_MAP } from './DetailsSteps'
 import { illustrations } from '@/public/illustrations'
 import { useEffect } from 'react'
+import PhaseDeleteButton from './PhaseDeleteButton'
+import PhaseEditButton from './PhaseEditButton'
+import PhaseCheckButton from './PhaseCheckButton'
 
-const DetailsStep = ({ taskId, phase, isLast }) => {
+const DetailsStep = ({ taskId, phase, isLast, isOnly }) => {
     const { title, time, location, icon, isComplete, image, _id } = phase
     const Icon = ICON_MAP[icon]
     const TimeIcon = isComplete ? CheckCircleIcon : ClockIcon
@@ -14,6 +17,12 @@ const DetailsStep = ({ taskId, phase, isLast }) => {
 
     function handleToggleTask() {
         return dispatch(toggleTaskPhase({ taskId, phaseId: phase._id }))
+    }
+
+    function handleEditPhase() {}
+
+    function handleDeletePhase() {
+        if (!isOnly) return dispatch(deletePhase({ taskId, phaseId: _id }))
     }
 
     useEffect(() => {
@@ -44,10 +53,10 @@ const DetailsStep = ({ taskId, phase, isLast }) => {
 
     return (
         <div
-            className={`flex py-5 gap-5 cursor-pointer hover:-translate-y-1 transition duration-200 select-none ${
+            className={`flex py-5 gap-5 cursor-pointer hover:-translate-y-1 transition duration-200 select-none relative group ${
                 isLast ? '' : 'border-b border-gray-900/20'
             }`}
-            onClick={handleToggleTask}
+            // onClick={handleToggleTask}
         >
             <Image
                 src={imgSrc}
@@ -74,6 +83,13 @@ const DetailsStep = ({ taskId, phase, isLast }) => {
                         <p className="text-sm font-thin">{time}</p>
                     </div>
                 </div>
+            </div>
+            <div className="absolute top-7 right-0 space-y-1 opacity-0 group-hover:opacity-100 transition duration-200">
+                <PhaseCheckButton handleClick={handleToggleTask} />
+                <PhaseEditButton handleEdit={handleEditPhase} />
+                {!isOnly && (
+                    <PhaseDeleteButton handleDelete={handleDeletePhase} />
+                )}
             </div>
         </div>
     )

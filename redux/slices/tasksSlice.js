@@ -89,6 +89,33 @@ export const createTask = createAsyncThunk('tasks/createTask', async (task) => {
     }
 })
 
+export const deletePhase = createAsyncThunk(
+    'tasks/deletePhase',
+    async ({ taskId, phaseId }) => {
+        try {
+            const res = await fetch(
+                `http://localhost:3000/api/tasks/${taskId}/phases/${phaseId}`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        taskId,
+                        phaseId,
+                        purpose: 'DELETE_PHASE',
+                    }),
+                }
+            )
+
+            const data = await res.json()
+            if (data.status === 'success') return data.data.task
+        } catch (error) {
+            console.error(error.message)
+        }
+    }
+)
+
 export const tasksSlice = createSlice({
     name: 'tasks',
     initialState,
@@ -142,11 +169,25 @@ export const tasksSlice = createSlice({
             state.isLoading = true
         })
         builder.addCase(createTask.fulfilled, (state, payload) => {
-            console.log(payload.payload)
             state.tasks.push(payload.payload)
             state.isLoading = false
         })
         builder.addCase(createTask.rejected, (state) => {
+            state.isLoading = false
+        })
+        builder.addCase(deletePhase.pending, (state) => {
+            state.isLoading = true
+        })
+        builder.addCase(deletePhase.fulfilled, (state, payload) => {
+            console.log('buildcase payload: ', payload)
+            const updatedTask = payload.payload
+            state.tasks = state.tasks.map((task) => {
+                if (task._id === updatedTask._id) return updatedTask
+                return task
+            })
+            state.isLoading = false
+        })
+        builder.addCase(deletePhase.rejected, (state) => {
             state.isLoading = false
         })
     },

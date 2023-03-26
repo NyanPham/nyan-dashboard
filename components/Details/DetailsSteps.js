@@ -19,6 +19,7 @@ const DetailsSteps = ({ task }) => {
                         phase={phase}
                         key={phase.time}
                         isLast={index === phases.length - 1}
+                        isOnly={phases.length === 1}
                     />
                 ))}
         </div>
