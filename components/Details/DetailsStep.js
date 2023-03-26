@@ -3,6 +3,7 @@ import { ClockIcon, CheckCircleIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 import { useDispatch } from 'react-redux'
 import { ICON_MAP } from './DetailsSteps'
+import { illustrations } from '@/public/illustrations'
 
 const DetailsStep = ({ taskId, phase, isLast }) => {
     const { title, time, location, icon, isComplete, image } = phase
@@ -11,8 +12,13 @@ const DetailsStep = ({ taskId, phase, isLast }) => {
     const dispatch = useDispatch()
 
     function handleToggleTask() {
-        return dispatch(toggleTaskPhase({ taskId, phaseId: phase.id }))
+        return dispatch(toggleTaskPhase({ taskId, phaseId: phase._id }))
     }
+
+    const imgSrc =
+        image && image !== ''
+            ? `/${image}`
+            : illustrations[Math.floor(Math.random() * illustrations.length)]
 
     return (
         <div
@@ -22,7 +28,7 @@ const DetailsStep = ({ taskId, phase, isLast }) => {
             onClick={handleToggleTask}
         >
             <Image
-                src={`/${image}`}
+                src={imgSrc}
                 alt={title}
                 width={56}
                 height={56}

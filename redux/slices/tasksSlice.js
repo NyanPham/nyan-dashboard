@@ -1,10 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
-const initialState = {
+export const initialState = {
     activeTaskId: 1,
     tasks: [
         {
-            id: 1,
+            _id: 1,
             phases: [
                 {
                     title: 'Meeting with new client',
@@ -13,7 +13,7 @@ const initialState = {
                     icon: 'camera',
                     isComplete: true,
                     image: '',
-                    id: 'phase-1',
+                    _id: 'phase-1',
                 },
                 {
                     title: 'Deal with new client',
@@ -22,7 +22,7 @@ const initialState = {
                     icon: 'camera',
                     isComplete: false,
                     image: '',
-                    id: 'phase-2',
+                    _id: 'phase-2',
                 },
             ],
             startFrom: '2023-03-25',
@@ -35,7 +35,7 @@ const initialState = {
             image: 'nature-1.jpg',
         },
         {
-            id: 2,
+            _id: 2,
             phases: [
                 {
                     title: 'Meeting with new client',
@@ -44,7 +44,7 @@ const initialState = {
                     icon: 'camera',
                     isComplete: false,
                     image: '',
-                    id: 'phase-3',
+                    _id: 'phase-3',
                 },
                 {
                     title: 'Deal with new client',
@@ -53,7 +53,7 @@ const initialState = {
                     icon: 'camera',
                     isComplete: false,
                     image: '',
-                    id: 'phase-4',
+                    _id: 'phase-4',
                 },
             ],
             startFrom: '2015-03-27',
@@ -66,7 +66,28 @@ const initialState = {
             image: 'nature-1.jpg',
         },
     ],
+    isLoading: false,
+    error: '',
+    message: '',
 }
+
+export const createTask = createAsyncThunk('tasks/createTask', async (task) => {
+    try {
+        const res = await fetch('http://localhost:3000/api/tasks', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(task),
+        })
+
+        const data = await res.json()
+
+        return data
+    } catch (error) {
+        console.error(error)
+    }
+})
 
 export const tasksSlice = createSlice({
     name: 'tasks',
@@ -94,8 +115,8 @@ export const tasksSlice = createSlice({
         toggleTaskPhase: (state, { payload }) => {
             const { taskId, phaseId } = payload
             const phase = state.tasks
-                .find((task) => task.id === taskId)
-                .phases.find((phase) => phase.id === phaseId)
+                .find((task) => task._id === taskId)
+                .phases.find((phase) => phase._id === phaseId)
 
             phase.isComplete = !phase.isComplete
         },
@@ -104,9 +125,44 @@ export const tasksSlice = createSlice({
                 state.activeTaskId = payload.taskId
             }
         },
+        setTasks: (state, { payload }) => {
+            console.log(payload)
+            state.tasks = payload.tasks
+        },
+    },
+    extraReducers: (builder) => {
+        builder.addCase(createTask.pending, (state) => {
+            state.isLoading = true
+        })
+        builder.addCase(createTask.fulfilled, (state, { meta }) => {
+            const { arg } = meta
+
+            // const newTask = {
+            //     id: new Date().toString(),
+            //     title: payload.title,
+            //     startFrom: new Date(),
+            //     description: payload.description || '',
+            //     refLink: payload.refLink || '',
+            //     comments: payload.comments || [],
+            //     progressColor: payload.progressColor || 'bg-sky-500',
+            //     image: payload.image || '',
+            //     phases:
+            //         payload.phases?.map((phase, index) => ({
+            //             ...phase,
+            //             id: `${new Date().toString()}_${index}`,
+            //         })) || [],
+            // }
+
+            // state.tasks.push(newTask)
+            state.isLoading = false
+        })
+        builder.addCase(createTask.rejected, (state) => {
+            state.isLoading = false
+        })
     },
 })
 
-export const { addTask, selectTask, toggleTaskPhase } = tasksSlice.actions
+export const { addTask, selectTask, toggleTaskPhase, setTasks } =
+    tasksSlice.actions
 
 export default tasksSlice.reducer

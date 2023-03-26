@@ -1,4 +1,6 @@
-import React from 'react'
+import { setTasks, selectTask } from '@/redux/slices/tasksSlice'
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import Layout from './Layout'
 import Content from './Main/Content'
 import Header from './Main/Header'

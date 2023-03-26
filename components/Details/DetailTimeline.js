@@ -23,12 +23,13 @@ const DetailTimeline = ({ task }) => {
     const [clickCount, setClickCount] = useState(0)
 
     const { phases } = task
-    const phasesWithDates = phases.map((phase) => {
-        return {
-            ...phase,
-            time: new Date(phase.time).setHours(0, 0, 0, 0),
-        }
-    })
+    const phasesWithDates =
+        phases?.map((phase) => {
+            return {
+                ...phase,
+                time: new Date(phase.time).setHours(0, 0, 0, 0),
+            }
+        }) || []
 
     useEffect(() => {
         if (calendarRef.current == null) return
@@ -48,11 +49,9 @@ const DetailTimeline = ({ task }) => {
             ref={calendarRef}
             onClick={() => setClickCount((prevCount) => prevCount + 1)}
         >
-            <Suspense>
-                <Calendar
-                    onChange={() => setClickCount((prevCount) => prevCount + 1)}
-                />
-            </Suspense>
+            <Calendar
+                onChange={() => setClickCount((prevCount) => prevCount + 1)}
+            />
         </div>
     )
 }

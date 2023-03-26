@@ -10,7 +10,7 @@ import AddTask from './AddTask'
 import { openDetails } from '@/redux/slices/detailsOpenSlice'
 
 const TaskCard = ({
-    id,
+    _id,
     startFrom,
     title,
     refLink,
@@ -25,13 +25,14 @@ const TaskCard = ({
 
     const progressStyle = {
         width: `${completion}%`,
+        backgroundColor: progressColor,
     }
 
     return (
         <div
             className="py-3 px-5 flex flex-col lg:grid lg:grid-cols-6 lg:items-center lg:content-evenly gap-2 bg-white rounded-xl hover:-translate-y-1 transition duration-150 cursor-pointer select-none"
             onClick={() => {
-                onSelect(id)
+                onSelect(_id)
             }}
         >
             <div className="flex items-center justify-between lg:block">

@@ -7,16 +7,15 @@ import {
     TrashIcon,
 } from '@heroicons/react/24/outline'
 import { useDispatch } from 'react-redux'
-import { addTask } from '@/redux/slices/tasksSlice'
+import { createTask } from '@/redux/slices/tasksSlice'
 
 const inititalTask = {
     phases: [],
-    startFrom: new Date(),
     title: '',
     description: '',
     refLink: '',
     comments: [],
-    progressColor: '',
+    progressColor: '#0EA5E9',
     image: '',
 }
 
@@ -42,6 +41,8 @@ const AddTask = () => {
     // new task and phase data
     const [taskData, setTaskData] = useState(inititalTask)
     const [phasesData, setPhasesData] = useState(inititalPhases)
+
+    console.log(taskData.progressColor)
 
     useEffect(() => {
         containerRef.current = document.getElementById('portal')
@@ -128,7 +129,7 @@ const AddTask = () => {
         )
     }
 
-    function onCreateTask(e) {
+    async function onCreateTask(e) {
         e.preventDefault()
 
         if (taskData.title === '' || taskData.title == null)
@@ -140,7 +141,7 @@ const AddTask = () => {
         setPhasesData(inititalPhases)
         setOpen(false)
 
-        return dispatch(addTask(newTask))
+        dispatch(createTask(newTask))
     }
 
     return (
@@ -158,7 +159,7 @@ const AddTask = () => {
                         data-form-dialog
                         ref={dialogRef}
                         onClick={handleDiaglogClick}
-                        className="p-0 backdrop:bg-gray-900/70"
+                        className="p-0 backdrop:bg-gray-900/70 w-2/3 lg:w-2/5"
                     >
                         <form className="p-7" onSubmit={onCreateTask}>
                             {stage === 'task' && (
@@ -252,14 +253,14 @@ const AddTask = () => {
                                                 Phase {phase.index + 1}
                                                 {phasesData.length > 1 && (
                                                     <div
-                                                        className="p-2 rounded-full border border-red-700 bg-white inline-block absolute top-1/2 -translate-y-1/2 left-full translate-x-4 cursor-pointer"
+                                                        className="p-1 rounded-full border border-red-700 bg-white inline-block absolute top-1/2 -translate-y-1/2 left-full translate-x-4 cursor-pointer"
                                                         onClick={() =>
                                                             deletePhase(
                                                                 phase.index
                                                             )
                                                         }
                                                     >
-                                                        <TrashIcon className="w-4 h-4 text-red-700" />
+                                                        <TrashIcon className="w-3 h-3 text-red-700" />
                                                     </div>
                                                 )}
                                             </legend>
