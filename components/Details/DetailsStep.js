@@ -50,7 +50,6 @@ const DetailsStep = ({ taskId, phase, isLast, isOnly }) => {
         image && image !== ''
             ? `/${image}`
             : illustrations[Math.floor(Math.random() * illustrations.length)]
-
     return (
         <div
             className={`flex py-5 gap-5 cursor-pointer hover:-translate-y-1 transition duration-200 select-none relative group ${

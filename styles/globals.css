@@ -14,9 +14,17 @@
     .form-input {
         @apply text-base outline-none active:outline-none rounded-xl bg-gray-100 text-gray-900 py-2 px-5 w-full;
     }
-    
+
     .form-title {
         @apply text-gray-700 text-base;
+    }
+
+    .form-error {
+        @apply text-red-600 font-medium text-xs;
+    }
+
+    .form-submit-button {
+        @apply w-full text-center p-3 rounded-xl text-white font-semibold bg-blue-500 hover:bg-blue-400 hover:shadow-lg hover:-translate-y-1 active:bg-blue-700 transition duration-200;
     }
 }
 
@@ -58,11 +66,11 @@
 
 .react-calendar button:active {
     background-color: rgb(30 64 175);
-} 
+}
 
 .react-calendar__month-view__days {
     display: grid !important;
-    grid-template-columns: 14.2% 14.2% 14.2% 14.2% 14.2% 14.2% 14.2%; 
+    grid-template-columns: 14.2% 14.2% 14.2% 14.2% 14.2% 14.2% 14.2%;
 }
 
 .react-calendar__month-view__days .react-calendar__tile {
@@ -74,7 +82,7 @@
     background-color: rgb(30 64 175);
     color: white;
 }
-    
+
 .react-calendar button.react-calendar__month-view__days__day {
     border-radius: 50%;
     background: none;
@@ -93,21 +101,21 @@
     color: white;
 }
 
-.react-calendar__year-view__months, 
-.react-calendar__decade-view__years, 
+.react-calendar__year-view__months,
+.react-calendar__decade-view__years,
 .react-calendar__century-view__decades {
     display: grid !important;
     grid-template-columns: 20% 20% 20% 20% 20%;
 }
 
-.react-calendar__year-view__months.react-calendar__year-view__months, 
-.react-calendar__decade-view__years.react-calendar__year-view__months, 
-.react-calendar__century-view__decades.react-calendar__year-view__months  {
+.react-calendar__year-view__months.react-calendar__year-view__months,
+.react-calendar__decade-view__years.react-calendar__year-view__months,
+.react-calendar__century-view__decades.react-calendar__year-view__months {
     grid-template-columns: 33.3% 33.3% 33.3%;
 }
 
-.react-calendar__year-view__months.react-calendar__tile, 
-.react-calendar__decade-view__years.react-calendar__tile, 
+.react-calendar__year-view__months.react-calendar__tile,
+.react-calendar__decade-view__years.react-calendar__tile,
 .react-calendar__century-view__decades.react-calendar__tile {
     max-width: initial !important;
 }
@@ -117,13 +125,17 @@
     font-size: 0.8rem;
 }
 
-.react-calendar .react-calendar__navigation__arrow.react-calendar__navigation__prev2-button,
-.react-calendar  .react-calendar__navigation__arrow.react-calendar__navigation__next2-button {
+.react-calendar
+    .react-calendar__navigation__arrow.react-calendar__navigation__prev2-button,
+.react-calendar
+    .react-calendar__navigation__arrow.react-calendar__navigation__next2-button {
     display: none;
 }
 
-.react-calendar .react-calendar__navigation__arrow.react-calendar__navigation__prev-button,
-.react-calendar .react-calendar__navigation__arrow.react-calendar__navigation__next-button {
+.react-calendar
+    .react-calendar__navigation__arrow.react-calendar__navigation__prev-button,
+.react-calendar
+    .react-calendar__navigation__arrow.react-calendar__navigation__next-button {
     background: none;
     color: #333;
     font-size: 1.5rem;
@@ -132,16 +144,16 @@
     opacity: 0.7;
 }
 
-.react-calendar .react-calendar__navigation__arrow.react-calendar__navigation__prev-button:hover,
-.react-calendar .react-calendar__navigation__arrow.react-calendar__navigation__next-button:hover {
+.react-calendar
+    .react-calendar__navigation__arrow.react-calendar__navigation__prev-button:hover,
+.react-calendar
+    .react-calendar__navigation__arrow.react-calendar__navigation__next-button:hover {
     opacity: 1;
 }
 
 .react-calendar__navigation {
     display: grid;
-    grid-template-areas: 
-        "date date left right"
-    ;
+    grid-template-areas: 'date date left right';
     grid-template-columns: auto auto 2.5rem 2.5rem;
 }
 
